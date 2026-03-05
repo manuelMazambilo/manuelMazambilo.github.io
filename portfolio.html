@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manuel Mazambilo — Data & BI Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0e;
+  --bg2: #111114;
+  --bg3: #18181c;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8e6e1;
+  --text2: #8a8882;
+  --text3: #5a5856;
+  --accent: #6ee7b7;
+  --accent2: #f59e0b;
+  --accent3: #818cf8;
+  --red: #f87171;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Geist', system-ui, sans-serif;
+  --mono: 'Geist Mono', monospace;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+
+.cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(110,231,183,0.06) 0%, transparent 70%); pointer-events: none; transform: translate(-50%, -50%); z-index: 0; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(12,12,14,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+.nav-links { display: flex; align-items: center; gap: 6px; }
+.nav-links a { font-family: var(--mono); font-size: 12px; color: var(--text2); text-decoration: none; padding: 6px 14px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+.nav-links a:hover { color: var(--text); background: var(--bg3); }
+.nav-cta { background: var(--bg3) !important; border: 1px solid var(--border2) !important; color: var(--text) !important; }
+.nav-cta:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+
+/* HERO */
+#hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 40px 80px; position: relative; overflow: hidden; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 100%); opacity: 0.4; }
+.hero-glow-bg { position: absolute; width: 700px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(110,231,183,0.07) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(110,231,183,0.08); border: 1px solid rgba(110,231,183,0.2); border-radius: 100px; padding: 6px 16px; font-family: var(--mono); font-size: 12px; color: var(--accent); margin-bottom: 32px; position: relative; opacity: 0; animation: fadeUp 0.5s 0.1s forwards; }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+h1.hero-title { font-family: var(--serif); font-size: clamp(52px, 8vw, 96px); font-weight: 400; line-height: 1; letter-spacing: -2px; color: var(--text); position: relative; opacity: 0; animation: fadeUp 0.6s 0.2s forwards; }
+h1.hero-title em { font-style: italic; color: var(--accent); }
+.hero-sub { margin-top: 24px; font-size: 17px; color: var(--text2); max-width: 520px; line-height: 1.75; position: relative; opacity: 0; animation: fadeUp 0.6s 0.35s forwards; }
+.hero-actions { margin-top: 40px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; position: relative; opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
+.btn-p { display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #0c0c0e; font-family: var(--mono); font-size: 13px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
+.btn-p:hover { opacity: 0.85; transform: translateY(-2px); }
+.btn-g { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border2); color: var(--text); font-family: var(--mono); font-size: 13px; padding: 12px 24px; border-radius: 8px; text-decoration: none; transition: border-color 0.2s, background 0.2s, transform 0.2s; }
+.btn-g:hover { border-color: var(--text2); background: var(--bg3); transform: translateY(-2px); }
+.hero-stats { margin-top: 72px; display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; opacity: 0; animation: fadeUp 0.6s 0.65s forwards; }
+.hstat { background: var(--bg2); padding: 20px 40px; text-align: center; flex: 1; }
+.hstat-n { font-family: var(--serif); font-size: 34px; color: var(--text); line-height: 1; }
+.hstat-n span { color: var(--accent); }
+.hstat-l { font-family: var(--mono); font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 4px; }
+
+/* SECTIONS */
+.sw { max-width: 1080px; margin: 0 auto; }
+section { padding: 100px 40px; position: relative; }
+.sl { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--text3); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.sl::before { content: ''; width: 20px; height: 1px; background: var(--text3); }
+h2.st { font-family: var(--serif); font-size: clamp(36px, 5vw, 58px); font-weight: 400; letter-spacing: -1px; line-height: 1.05; color: var(--text); margin-bottom: 60px; }
+h2.st em { font-style: italic; color: var(--accent); }
+
+/* SKILLS */
+#skills { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.sg { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.sc { background: var(--bg2); padding: 32px; position: relative; overflow: hidden; transition: background 0.25s; cursor: default; }
+.sc:hover { background: var(--bg3); }
+.sc-num { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 18px; }
+.sc-title { font-family: var(--serif); font-size: 22px; color: var(--text); margin-bottom: 10px; }
+.sc-body { font-size: 14px; color: var(--text2); line-height: 1.65; }
+.sc-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+.stag { font-family: var(--mono); font-size: 10px; color: var(--text3); border: 1px solid var(--border2); padding: 3px 10px; border-radius: 100px; }
+
+/* PROJECTS */
+#projects { background: var(--bg); }
+.pg { display: flex; flex-direction: column; gap: 2px; }
+.pr { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+.pr:hover { border-color: var(--border2); }
+.ph { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 24px; padding: 28px 32px; cursor: pointer; user-select: none; }
+.pl { display: flex; align-items: center; gap: 20px; }
+.pnum { font-family: var(--mono); font-size: 11px; color: var(--text3); min-width: 24px; }
+.pname { font-family: var(--serif); font-size: 22px; color: var(--text); margin-bottom: 4px; }
+.pco { font-family: var(--mono); font-size: 12px; color: var(--text3); }
+.prright { display: flex; align-items: center; gap: 12px; }
+.ptag { font-family: var(--mono); font-size: 11px; padding: 4px 12px; border-radius: 100px; border: 1px solid; }
+.tbi { color: var(--accent); border-color: rgba(110,231,183,0.25); background: rgba(110,231,183,0.06); }
+.tetl { color: var(--accent2); border-color: rgba(245,158,11,0.25); background: rgba(245,158,11,0.06); }
+.tsql { color: var(--accent3); border-color: rgba(129,140,248,0.25); background: rgba(129,140,248,0.06); }
+.tkpi { color: var(--red); border-color: rgba(248,113,113,0.25); background: rgba(248,113,113,0.06); }
+.parrow { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 6px; background: var(--bg3); color: var(--text2); font-size: 18px; transition: transform 0.3s, background 0.2s, color 0.2s; flex-shrink: 0; font-family: monospace; }
+.pr.open .parrow { transform: rotate(45deg); background: rgba(110,231,183,0.1); color: var(--accent); }
+.pb { display: none; padding: 0 32px 32px; }
+.pr.open .pb { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+.pb-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text3); margin-bottom: 12px; }
+.pb-text { font-size: 15px; color: var(--text2); line-height: 1.7; }
+.imp { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+.ii { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; }
+.ii-ico { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.ig { background: rgba(110,231,183,0.1); }
+.ia { background: rgba(245,158,11,0.1); }
+.ip { background: rgba(129,140,248,0.1); }
+.ii-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+.ii-text strong { color: var(--text); font-weight: 500; }
+.pb-tools { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* EXPERIENCE */
+#experience { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.el { display: flex; flex-direction: column; }
+.ec { display: grid; grid-template-columns: 200px 1fr; gap: 40px; padding: 36px 0; border-bottom: 1px solid var(--border); opacity: 0; transform: translateY(14px); transition: opacity 0.5s, transform 0.5s; }
+.ec:last-child { border-bottom: none; }
+.ec.visible { opacity: 1; transform: translateY(0); }
+.ep { font-family: var(--mono); font-size: 12px; color: var(--text3); margin-bottom: 4px; }
+.eco { font-size: 14px; font-weight: 500; color: var(--text2); }
+.eloc { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-top: 2px; }
+.erole { font-family: var(--serif); font-size: 26px; color: var(--text); margin-bottom: 16px; line-height: 1.1; }
+.ebl { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ebl li { font-size: 14px; color: var(--text2); padding-left: 18px; position: relative; line-height: 1.6; }
+.ebl li::before { content: '–'; position: absolute; left: 0; color: var(--text3); }
+
+/* ABOUT */
+#about { background: var(--bg); }
+.ag { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px; align-items: start; }
+.ab { font-size: 18px; color: var(--text2); line-height: 1.8; }
+.ab p { margin-bottom: 20px; }
+.ab strong { color: var(--text); font-weight: 500; }
+.ib { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+.ir { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); }
+.ir:last-child { border-bottom: none; }
+.ik { font-family: var(--mono); font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; }
+.iv { font-size: 13px; color: var(--text2); font-weight: 500; }
+.cb { border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.ct { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 12px; }
+.ci { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.ci:last-child { border-bottom: none; }
+.cd { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.ctext { font-size: 13px; color: var(--text2); }
+.cbadge { margin-left: auto; font-family: var(--mono); font-size: 10px; padding: 3px 10px; border-radius: 100px; background: rgba(110,231,183,0.08); border: 1px solid rgba(110,231,183,0.2); color: var(--accent); }
+
+/* TOOLS */
+#tools { background: var(--bg2); padding: 40px 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ts { display: flex; gap: 40px; animation: marquee 26s linear infinite; width: max-content; }
+.tp { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--text3); white-space: nowrap; padding: 8px 18px; border: 1px solid var(--border); border-radius: 100px; background: var(--bg); }
+.tp span { color: var(--accent); font-size: 10px; }
+
+/* CONTACT */
+#contact { background: var(--bg); text-align: center; padding: 140px 40px; }
+.cglow { position: absolute; width: 500px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(110,231,183,0.06) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+.cemail { display: inline-block; font-family: var(--serif); font-size: clamp(26px, 4vw, 48px); color: var(--text); text-decoration: none; border-bottom: 2px solid rgba(110,231,183,0.3); padding-bottom: 4px; margin-bottom: 48px; transition: border-color 0.2s, color 0.2s; }
+.cemail:hover { border-color: var(--accent); color: var(--accent); }
+.cl { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.clink { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; color: var(--text2); text-decoration: none; padding: 10px 20px; border: 1px solid var(--border2); border-radius: 8px; background: var(--bg2); transition: color 0.2s, border-color 0.2s; }
+.clink:hover { color: var(--text); border-color: var(--text2); }
+
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
+.fl { font-family: var(--mono); font-size: 12px; color: var(--text3); }
+.fr { font-family: var(--mono); font-size: 12px; color: var(--text3); display: flex; align-items: center; gap: 8px; }
+.fr span { color: var(--accent); }
+
+/* REVEAL */
+.rev { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.rev.visible { opacity: 1; transform: translateY(0); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+@media(max-width:880px){
+  nav{padding:0 20px;}
+  section{padding:80px 20px;}
+  .sg{grid-template-columns:1fr;}
+  .pr.open .pb{grid-template-columns:1fr;}
+  .ec{grid-template-columns:1fr;gap:12px;}
+  .ag{grid-template-columns:1fr;gap:40px;}
+  .hero-stats{flex-direction:column;width:100%;}
+  .nav-links a:not(.nav-cta){display:none;}
+  footer{flex-direction:column;gap:8px;text-align:center;}
+  .ph{grid-template-columns:1fr;}
+  .prright{display:none;}
+  .ph .parrow{display:flex;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="glow"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-dot"></span>Manuel Mazambilo
+  </a>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projectos</a>
+    <a href="#experience">Experiência</a>
+    <a href="#about">Sobre</a>
+    <a href="#contact" class="nav-cta">Contacto →</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow-bg"></div>
+  <div class="hero-badge"><span class="badge-dot"></span>Disponível para novas oportunidades</div>
+  <h1 class="hero-title">Dados que<br><em>geram impacto</em></h1>
+  <p class="hero-sub">Business Intelligence & Data Analytics specialist. Transformo dados complexos em decisões estratégicas claras — com SQL, Power BI e modelos analíticos precisos.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn-p">Ver projectos →</a>
+    <a href="#contact" class="btn-g">Entrar em contacto</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">3<span>+</span></div><div class="hstat-l">Anos de exp.</div></div>
+    <div class="hstat"><div class="hstat-n">2</div><div class="hstat-l">Empresas</div></div>
+    <div class="hstat"><div class="hstat-n">C<span>1</span></div><div class="hstat-l">Inglês EF SET</div></div>
+    <div class="hstat"><div class="hstat-n">5<span>+</span></div><div class="hstat-l">Projectos</div></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sw">
+    <div class="sl rev">Competências</div>
+    <h2 class="st rev">O que <em>domino</em></h2>
+    <div class="sg">
+      <div class="sc rev"><div class="sc-num">01</div><div class="sc-title">Business Intelligence</div><div class="sc-body">Dashboards executivos no Power BI com KPIs em tempo real, conectando múltiplas fontes operacionais e financeiras numa narrativa visual clara.</div><div class="sc-tags"><span class="stag">Power BI</span><span class="stag">DAX</span><span class="stag">Dashboards</span></div></div>
+      <div class="sc rev"><div class="sc-num">02</div><div class="sc-title">SQL & Data Modeling</div><div class="sc-body">Queries avançadas para análise e manipulação de dados. Modelagem relacional, optimização de performance e arquitectura analítica de dados.</div><div class="sc-tags"><span class="stag">SQL</span><span class="stag">Data Modeling</span><span class="stag">Queries</span></div></div>
+      <div class="sc rev"><div class="sc-num">03</div><div class="sc-title">ETL & Automação</div><div class="sc-body">Pipelines de Extracção, Transformação e Carregamento com processos automatizados que garantem qualidade, consistência e disponibilidade de dados.</div><div class="sc-tags"><span class="stag">ETL</span><span class="stag">Automação</span><span class="stag">Data Quality</span></div></div>
+      <div class="sc rev"><div class="sc-num">04</div><div class="sc-title">KPI Design</div><div class="sc-body">Definição e optimização de KPIs e KQIs para operações, finanças, logística e vendas — métricas que reflectem o real desempenho do negócio.</div><div class="sc-tags"><span class="stag">KPI</span><span class="stag">KQI</span><span class="stag">Performance</span></div></div>
+      <div class="sc rev"><div class="sc-num">05</div><div class="sc-title">Sales & Market Analysis</div><div class="sc-body">Análises de vendas, estudos de mercado e avaliações de trade marketing transformados em insights accionáveis para decisões comerciais.</div><div class="sc-tags"><span class="stag">Vendas</span><span class="stag">Mercado</span><span class="stag">Trade Mktg</span></div></div>
+      <div class="sc rev"><div class="sc-num">06</div><div class="sc-title">Process Optimization</div><div class="sc-body">Identificação de ineficiências e implementação de melhorias com redução de custos e aumento de eficiência operacional mensuráveis.</div><div class="sc-tags"><span class="stag">Processos</span><span class="stag">Eficiência</span><span class="stag">Custo</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sw">
+    <div class="sl rev">Projectos</div>
+    <h2 class="st rev">Trabalho <em>em destaque</em></h2>
+    <div class="pg">
+
+      <div class="pr rev" onclick="toggleProject(this)">
+        <div class="ph">
+          <div class="pl">
+            <div class="pnum">01</div>
+            <div><div class="pname">Dashboard Executivo Operacional</div><div class="pco">KAESO Energy Services · 2025</div></div>
+          </div>
+          <div class="prright">
+            <span class="ptag tbi">Power BI</span>
+            <span class="ptag tsql">SQL</span>
+            <div class="parrow">+</div>
+          </div>
+        </div>
+        <div class="pb">
+          <div>
+            <div class="pb-label">Descrição do projecto</div>
+            <div class="pb-text">Desenvolvimento de um sistema de dashboards executivos integrando dados de múltiplos departamentos — operações, finanças e logística. O objectivo era substituir relatórios manuais dispersos por uma visão centralizada e em tempo real do desempenho da empresa.<br><br>A solução incluiu modelagem de dados analíticos, medidas DAX avançadas e actualização automatizada com conectores a fontes operacionais e financeiras.</div>
+            <div class="pb-tools"><span class="stag">Power BI</span><span class="stag">SQL Server</span><span class="stag">DAX</span><span class="stag">Data Modeling</span><span class="stag">ETL</span></div>
+          </div>
+          <div>
+            <div class="pb-label">Impacto & Resultados</div>
+            <div class="imp">
+              <div class="ii"><div class="ii-ico ig">📊</div><div class="ii-text"><strong>Visibilidade em tempo real</strong> para múltiplos departamentos, eliminando a dependência de relatórios estáticos e manuais.</div></div>
+              <div class="ii"><div class="ii-ico ia">⚡</div><div class="ii-text"><strong>Redução significativa do tempo</strong> de preparação de relatórios gerenciais através da automatização de processos manuais.</div></div>
+              <div class="ii"><div class="ii-ico ip">🎯</div><div class="ii-text"><strong>KPIs unificados</strong> para operações, finanças e logística — fonte única de verdade para toda a organização.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr rev" onclick="toggleProject(this)">
+        <div class="ph">
+          <div class="pl">
+            <div class="pnum">02</div>
+            <div><div class="pname">Sistema de KPIs & KQIs Multi-Área</div><div class="pco">Brand's Up · 2023–2025</div></div>
+          </div>
+          <div class="prright">
+            <span class="ptag tkpi">KPIs</span>
+            <span class="ptag tetl">ETL</span>
+            <div class="parrow">+</div>
+          </div>
+        </div>
+        <div class="pb">
+          <div>
+            <div class="pb-label">Descrição do projecto</div>
+            <div class="pb-text">Design e implementação de um framework completo de indicadores de desempenho e qualidade para múltiplas áreas de negócio — comercial, operacional e de marketing.<br><br>Envolveu a definição de métricas por área, construção de modelos de recolha e transformação de dados, e automatização de relatórios periódicos de monitorização.</div>
+            <div class="pb-tools"><span class="stag">Excel Avançado</span><span class="stag">Power BI</span><span class="stag">SQL</span><span class="stag">Odoo</span><span class="stag">ETL</span></div>
+          </div>
+          <div>
+            <div class="pb-label">Impacto & Resultados</div>
+            <div class="imp">
+              <div class="ii"><div class="ii-ico ig">✅</div><div class="ii-text"><strong>Framework de KPIs standardizado</strong> adoptado por múltiplas áreas de negócio, garantindo consistência de medição.</div></div>
+              <div class="ii"><div class="ii-ico ia">📈</div><div class="ii-text"><strong>Melhoria na qualidade de dados</strong> com modelos automatizados de avaliação e relatórios de monitorização operacional.</div></div>
+              <div class="ii"><div class="ii-ico ip">🔍</div><div class="ii-text"><strong>Suporte a auditorias externas</strong> com documentação analítica estruturada e processos de conformidade documentados.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr rev" onclick="toggleProject(this)">
+        <div class="ph">
+          <div class="pl">
+            <div class="pnum">03</div>
+            <div><div class="pname">Análise de Vendas & Trade Marketing</div><div class="pco">Brand's Up · 2023–2024</div></div>
+          </div>
+          <div class="prright">
+            <span class="ptag tsql">SQL</span>
+            <span class="ptag tbi">Analytics</span>
+            <div class="parrow">+</div>
+          </div>
+        </div>
+        <div class="pb">
+          <div>
+            <div class="pb-label">Descrição do projecto</div>
+            <div class="pb-text">Condução de análises aprofundadas de performance de vendas, estudos de mercado e avaliação de activações de trade marketing. Os insights gerados suportaram directamente as decisões estratégicas da equipa comercial.<br><br>Incluiu recolha e tratamento de dados de vendas, segmentação de mercado, análise de tendências e relatórios executivos periódicos.</div>
+            <div class="pb-tools"><span class="stag">SQL</span><span class="stag">Excel Avançado</span><span class="stag">Power BI</span><span class="stag">Análise de Mercado</span></div>
+          </div>
+          <div>
+            <div class="pb-label">Impacto & Resultados</div>
+            <div class="imp">
+              <div class="ii"><div class="ii-ico ig">💡</div><div class="ii-text"><strong>Insights accionáveis</strong> que informaram decisões comerciais estratégicas e campanhas de trade marketing.</div></div>
+              <div class="ii"><div class="ii-ico ia">📊</div><div class="ii-text"><strong>Relatórios periódicos automatizados</strong> de performance de vendas entregues à gestão com consistência e precisão.</div></div>
+              <div class="ii"><div class="ii-ico ip">🗺️</div><div class="ii-text"><strong>Estudos de mercado</strong> que mapearam oportunidades de crescimento e áreas de melhoria no posicionamento comercial.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pr rev" onclick="toggleProject(this)">
+        <div class="ph">
+          <div class="pl">
+            <div class="pnum">04</div>
+            <div><div class="pname">Automatização de Relatórios Gerenciais</div><div class="pco">Brand's Up · 2023</div></div>
+          </div>
+          <div class="prright">
+            <span class="ptag tetl">ETL</span>
+            <span class="ptag tbi">Power BI</span>
+            <div class="parrow">+</div>
+          </div>
+        </div>
+        <div class="pb">
+          <div>
+            <div class="pb-label">Descrição do projecto</div>
+            <div class="pb-text">Construção e implementação de um sistema automatizado de relatórios gerenciais e operacionais, substituindo processos manuais recorrentes por fluxos de dados automatizados com validação de qualidade integrada.<br><br>Garantiu disponibilidade, consistência e actualidade dos dados para toda a organização, reduzindo erros humanos.</div>
+            <div class="pb-tools"><span class="stag">Power BI</span><span class="stag">ETL</span><span class="stag">SQL</span><span class="stag">Microsoft 365</span><span class="stag">Odoo</span></div>
+          </div>
+          <div>
+            <div class="pb-label">Impacto & Resultados</div>
+            <div class="imp">
+              <div class="ii"><div class="ii-ico ig">🤖</div><div class="ii-text"><strong>Automação completa</strong> de relatórios recorrentes, libertando a equipa para análises de maior valor estratégico.</div></div>
+              <div class="ii"><div class="ii-ico ia">🎯</div><div class="ii-text"><strong>Qualidade de dados garantida</strong> com validações automáticas que detectam inconsistências antes da distribuição.</div></div>
+              <div class="ii"><div class="ii-ico ip">📬</div><div class="ii-text"><strong>Entrega consistente e pontual</strong> de informação de gestão para toda a organização, sem dependência manual.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sw">
+    <div class="sl rev">Historial</div>
+    <h2 class="st rev">Experiência <em>profissional</em></h2>
+    <div class="el">
+      <div class="ec rev">
+        <div><div class="ep">2025 — Presente</div><div class="eco">KAESO Energy Services</div><div class="eloc">Miramar, Luanda</div></div>
+        <div><div class="erole">Business Intelligence Analyst</div><ul class="ebl"><li>Modelos de dados analíticos e dashboards para optimização da tomada de decisão estratégica, integrando fontes operacionais e financeiras.</li><li>Design e optimização de KPIs para operações, finanças, logística e vendas.</li><li>Relatórios gerenciais automatizados com qualidade e disponibilidade garantidas.</li><li>Identificação de oportunidades de optimização de processos com impacto mensurável.</li></ul></div>
+      </div>
+      <div class="ec rev">
+        <div><div class="ep">Jul 2023 — Nov 2025</div><div class="eco">Brand's Up</div><div class="eloc">Morro Bento, Luanda</div></div>
+        <div><div class="erole">Data Analyst</div><ul class="ebl"><li>Modelos de dados analíticos para melhorar insights de negócios e decisão estratégica.</li><li>KPIs e KQIs desenhados e optimizados para múltiplas áreas de negócio.</li><li>Análises de vendas, estudos de mercado e avaliações de trade marketing.</li><li>Auditorias externas e documentação analítica para conformidade.</li><li>Sessões de formação a equipas sobre ferramentas de dados e plataformas digitais.</li></ul></div>
+      </div>
+      <div class="ec rev">
+        <div><div class="ep">Jan — Jun 2023</div><div class="eco">Brand's Up</div><div class="eloc">Luanda</div></div>
+        <div><div class="erole">IT Intern</div><ul class="ebl"><li>Manutenção, configuração e resolução de problemas de hardware e software.</li><li>Gestão de infraestrutura de rede, servidores e atualizações de sistemas.</li><li>Suporte técnico e gestão de contas de utilizadores.</li></ul></div>
+      </div>
+      <div class="ec rev">
+        <div><div class="ep">Jun — Jul 2022</div><div class="eco">CFP Mundo da Tecnologia</div><div class="eloc">Luanda</div></div>
+        <div><div class="erole">IT Trainee</div><ul class="ebl"><li>Formação técnica em infraestrutura de TI, redes e sistemas informáticos.</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="tools">
+  <div class="ts">
+    <span class="tp"><span>●</span> Power BI</span><span class="tp"><span>●</span> SQL</span><span class="tp"><span>●</span> ETL</span><span class="tp"><span>●</span> Excel Avançado</span><span class="tp"><span>●</span> Odoo</span><span class="tp"><span>●</span> Microsoft 365</span><span class="tp"><span>●</span> Data Modeling</span><span class="tp"><span>●</span> KPI Design</span><span class="tp"><span>●</span> C++ / C# / Java</span><span class="tp"><span>●</span> Data Storytelling</span>
+    <span class="tp"><span>●</span> Power BI</span><span class="tp"><span>●</span> SQL</span><span class="tp"><span>●</span> ETL</span><span class="tp"><span>●</span> Excel Avançado</span><span class="tp"><span>●</span> Odoo</span><span class="tp"><span>●</span> Microsoft 365</span><span class="tp"><span>●</span> Data Modeling</span><span class="tp"><span>●</span> KPI Design</span><span class="tp"><span>●</span> C++ / C# / Java</span><span class="tp"><span>●</span> Data Storytelling</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="sw">
+    <div class="sl rev">Sobre mim</div>
+    <h2 class="st rev">Quem está <em>por detrás dos dados</em></h2>
+    <div class="ag">
+      <div class="ab rev">
+        <p>Sou um profissional de dados baseado em <strong>Luanda, Angola</strong>, com formação em Engenharia Informática e uma paixão genuína por transformar dados brutos em activos estratégicos de decisão.</p>
+        <p>A minha abordagem combina rigor técnico com visão de negócio. Não me limito a construir dashboards — <strong>entendo o problema, identifico as métricas certas e entrego clareza</strong> para que as pessoas possam tomar melhores decisões.</p>
+        <p>Tenho trabalhado em sectores como <strong>energia, marketing e distribuição</strong>, sempre com foco em impacto mensurável, eficiência operacional e crescimento contínuo.</p>
+      </div>
+      <div class="rev">
+        <div class="ib">
+          <div class="ir"><span class="ik">Localização</span><span class="iv">Kilamba Kiaxi, Luanda</span></div>
+          <div class="ir"><span class="ik">Formação</span><span class="iv">Eng. Informática — UMA</span></div>
+          <div class="ir"><span class="ik">Graduação</span><span class="iv">2020 – 2025</span></div>
+          <div class="ir"><span class="ik">Línguas</span><span class="iv">Português · Inglês C1</span></div>
+          <div class="ir"><span class="ik">Disponibilidade</span><span class="iv" style="color:var(--accent)">● Disponível</span></div>
+        </div>
+        <div class="cb">
+          <div class="ct">Certificações</div>
+          <div class="ci"><div class="cd"></div><div class="ctext">EF SET English Certificate</div><span class="cbadge">C1 · 68/100</span></div>
+          <div class="ci"><div class="cd" style="background:var(--accent2)"></div><div class="ctext">Power BI Training</div><span class="cbadge" style="color:var(--accent2);border-color:rgba(245,158,11,0.2);background:rgba(245,158,11,0.06)">Completo</span></div>
+          <div class="ci"><div class="cd" style="background:var(--accent3)"></div><div class="ctext">SQL para Análise de Dados</div><span class="cbadge" style="color:var(--accent3);border-color:rgba(129,140,248,0.2);background:rgba(129,140,248,0.06)">Completo</span></div>
+          <div class="ci"><div class="cd" style="background:var(--red)"></div><div class="ctext">IT Essentials</div><span class="cbadge" style="color:var(--red);border-color:rgba(248,113,113,0.2);background:rgba(248,113,113,0.06)">Completo</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="cglow"></div>
+  <div class="sw" style="position:relative;z-index:1;">
+    <div class="sl rev" style="justify-content:center;">Contacto</div>
+    <h2 class="st rev" style="text-align:center;">Vamos <em>trabalhar juntos</em></h2>
+    <a href="mailto:manuelmazambilo99@outlook.pt" class="cemail rev">manuelmazambilo99@outlook.pt</a>
+    <div class="cl rev">
+      <a href="https://linkedin.com/in/manuelmazambilo" target="_blank" class="clink">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/manuelMazambilo" target="_blank" class="clink">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="tel:+244942490858" class="clink">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        +244 942 490 858
+      </a>
+      <a href="tel:+244951623611" class="clink">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        +244 951 623 611
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">© 2025 Manuel Mazambilo</div>
+  <div class="fr">Luanda, Angola <span>·</span> Data Analytics <span>·</span> BI</div>
+</footer>
+
+<script>
+const glow = document.getElementById('glow');
+document.addEventListener('mousemove', e => {
+  glow.style.left = e.clientX + 'px';
+  glow.style.top = e.clientY + 'px';
+});
+
+function toggleProject(el) {
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.pr').forEach(r => r.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.rev, .ec').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
